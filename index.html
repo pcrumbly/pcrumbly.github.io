@@ -154,7 +154,8 @@
     <div class="container">
         <h2>About Me</h2>
         <p>Hey! I'm PC.<br> I'm passionate about creating web tools and solving small business problems through programming.</p>
-        
+        <h1>🍒's: <span id="cherries">Loading...</span></h1>
+        <button onclick="incrementCherries()">Give a 🍒</button>
         <h2>Projects</h2>
         <ul>
             <li><a href="https://www.idea-set.org">Project 1: IDEA-SET.org</a></li>
@@ -217,6 +218,36 @@
                     modal.style.display = 'none';
                 }
             }
+                async function getCherries() {
+            const response = await fetch('http://45.32.222.188/cherries');
+            const data = await response.json();
+            return data.cherries;
+        }
+
+        async function updateCherries() {
+            const cherriesElement = document.getElementById('cherries');
+            const cherries = await getCherries();
+            cherriesElement.textContent = cherries;
+        }
+
+        async function incrementCherries() {
+            const response = await fetch('http://45.32.222.188/cherries', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ cherries: 1 }),
+            });
+
+            const data = await response.json();
+            document.getElementById('cherries').textContent = data.cherries;
+        }
+
+        // Load cherries when the page loads
+        window.addEventListener('DOMContentLoaded', async () => {
+            await updateCherries();
+        });
     </script>
+
 </body>
 </html>
