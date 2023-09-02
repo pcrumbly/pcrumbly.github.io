@@ -59,13 +59,60 @@
             color: #a5322f;
             text-decoration: underline;
         }
+
+        body.dark-mode {
+            background-color: #333;
+            color: #fafafa;
+        }
+
+        body.dark-mode header {
+            background-color: #444;
+            color: #C24641;
+        }
+
+        body.dark-mode .container {
+            background-color: #444;
+            color: #fafafa;
+        }
+
+        body.dark-mode a {
+            color: #C24641;
+        }
+
+        body.dark-mode a:hover {
+            color: #fff;
+        }
+
+        body.dark-mode h2 {
+            border-bottom: 1px solid #555;
+        }
+
+        /* Dark mode button */
+        #darkModeToggle {
+            position: absolute;
+            top: 1.5em;
+            right: 1em;
+            background: none;
+            border: none;
+            font-size: 1em;
+            cursor: pointer;
+            color: #C24641;
+            transition: color 0.3s ease;
+        }
+
+        body.dark-mode #darkModeToggle {
+            color: #fafafa;
+        }
+
     </style>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+
     <header>
         <h1>PC's Portfolio</h1>
+        <button id="darkModeToggle">🌙 Dark Mode</button>
     </header>
     <div class="container">
         <h2>About Me</h2>
@@ -83,5 +130,19 @@
         <p>Work together? Feel free to contact me:</p>
         <p>Email: preston.🍒🤯@gmail.com</p>
     </div>
+    <script>
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const body = document.body;
+    
+            darkModeToggle.addEventListener('click', function() {
+                if(body.classList.contains('dark-mode')) {
+                    body.classList.remove('dark-mode');
+                    darkModeToggle.textContent = "🌙 Dark Mode";
+                } else {
+                    body.classList.add('dark-mode');
+                    darkModeToggle.textContent = "☀️ Light Mode";
+                }
+            });
+    </script>
 </body>
 </html>
