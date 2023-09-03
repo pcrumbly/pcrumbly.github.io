@@ -218,42 +218,39 @@
                     modal.style.display = 'none';
                 }
             }
-                async function getCherries() {
-            const response = await fetch('https://pcrumbly.pythonanywhere.com/cherries');
-            const data = await response.json();
-            return data.cherries;
-        }
+            async function getCherries() {
+                const response = await fetch('https://pcrumbly.pythonanywhere.com/cherries');
+                const data = await response.json();
+                return data.cherries;
+            }
 
-        async function updateCherries() {
-            const cherriesElement = document.getElementById('cherries');
-            const cherries = await getCherries();
-            cherriesElement.textContent = cherries;
-        }
-
-        async function incrementCherries() {
-            const currentCherries = await getCherries(); // Get the current cherries count
-            const incrementAmount = 1; // You can adjust this value to increment by any desired amount
+            async function updateCherries() {
+                const cherriesElement = document.getElementById('cherries');
+                const cherries = await getCherries();
+                cherriesElement.textContent = cherries;
+            }
+    
+            async function incrementCherries() {
+                const currentCherries = await getCherries(); // Get the current cherries count
+                const incrementAmount = 1; // You can adjust this value to increment by any desired amount
+                currentCherries += incrementAmount
+                const response = await fetch('https://pcrumbly.pythonanywhere.com/cherries', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ cherries: currentCherries }), // Increment cherries value
+                });
+            
+                const data = await response.json();
+                document.getElementById('cherries').textContent = data.cherries;
+                await updateCherries();
+            }
         
-            const response = await fetch('https://pcrumbly.pythonanywhere.com/cherries', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ cherries: currentCherries + incrementAmount }), // Increment cherries value
+            // Load cherries when the page loads
+            window.addEventListener('DOMContentLoaded', async () => {
+                await updateCherries();
             });
-        
-            const data = await response.json();
-            document.getElementById('cherries').textContent = data.cherries;
-        }
-
-            const data = await response.json();
-            document.getElementById('cherries').textContent = data.cherries;
-        }
-
-        // Load cherries when the page loads
-        window.addEventListener('DOMContentLoaded', async () => {
-            await updateCherries();
-        });
     </script>
 
 </body>
